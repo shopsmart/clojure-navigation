@@ -43,10 +43,15 @@ processed, logged, etc.
 
 ## Usage
 
-src/bradsdeals/nav.clj - Adds Unix-like navigation and browsing for nested Clojure
-data structures.  See the file itself for more information.
+Build using
 
-src/bradsdeals/util.clj - Dependencies of nav.clj and experimental Clojure code.
+    lein jar
+
+Then depend on it using:
+
+    [com.bradsdeals/clojure-navigation "1.0.0-SNAPSHOT"]
+
+TODO: Add clojars information once we have an official build.
 
 ## License
 
