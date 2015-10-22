@@ -20,6 +20,9 @@ The matcher can be any type.  If it is a regular expression Pattern, it is match
 strings or the output of (.toString obj) Strings match any substring of the target object.
 All other objects match using (= matcher obj).
 
+    => (grep :diffed (current))
+    [[:diffed {}] [:diffed {}]]
+
 * Inject behavior before/after/around all forms in a do-style block or thread-last
 macro form (experimental).
 
