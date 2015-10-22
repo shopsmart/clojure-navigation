@@ -107,7 +107,8 @@ intermediate collections, in the order in which fns are specified."
 
 
 (defn- parent-container [loc]
-  (let [parent (zip/node (zip/up loc))]
+  (let [up (zip/up loc)
+        parent (if up (zip/node up))]
     (cond
       (nil? parent) (zip/node loc)
       (or (map? parent) (vector? parent) (list? parent) (set? parent) (seq? parent)) parent
