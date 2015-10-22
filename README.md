@@ -43,11 +43,18 @@ processed, logged, etc.
 
 ## Usage
 
+Open project.clj and change the line that reads:
+
+    :repositories [["snapshots" {:url "file:/Users/dorme/.m2/repository/"
+
+to point to your local Maven repository
+
 Build using
 
     lein jar
+    lein deploy snapshots
 
-Then depend on it using:
+Then depend on it in Leiningen using:
 
     [com.bradsdeals/clojure-navigation "1.0.0-SNAPSHOT"]
 

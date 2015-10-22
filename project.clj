@@ -5,5 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.logging "0.2.6"]]
+  :repositories [["snapshots" {:url "file:/Users/dorme/.m2/repository/"
+                               :username "nobody"
+                               :password "nobody"}]]
   :jvm-opts ["-Xmx10g" "-Xms512m" "-XX:+UseParallelGC"]
   :profiles {:uberjar {:aot :all}})
