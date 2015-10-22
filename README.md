@@ -25,5 +25,9 @@ src/bradsdeals/util.clj - Dependencies of nav.clj and experimental Clojure code.
 
 ## License
 
-Copyright © 2015 by ShopSmart, LLC.
+Copyright © 2015 by ShopSmart, LLC.  Licensed under the Eclipse Public License v1.0.
+
+## Authors
+
+David Orme
 
