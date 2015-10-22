@@ -1,6 +1,8 @@
 (ns bradsdeals.pipe
-  "Pipeline semantics for Clojure, along with a version of reduce that produces
-a transducer function."
+  "A Unix-style pipe operator and recursive grep command.  Pipe operates on a single
+container's elements.  Grep recursively searches nested data structures.
+
+Also includes xreduce, a version of reduce that returns a transducer function."
   (:require [clojure.zip :as zip]
             [clojure.core.reducers :as r]
             [bradsdeals.tree-visit :as v])
