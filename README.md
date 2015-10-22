@@ -1,18 +1,22 @@
-# bradsdeals.repl
+# clojure-navigation
 
-Bradsdeals.repl is a place for tools that are intended to be accessed from a REPL during
-development, for system settings and tools helpful when configuring your environment, and
-for useful or experimental code that has not yet made it into production.
+Clojure-navigation contains utilities for navigating data and/or code.  For example:
+
+(mount data-structure)
+(cd :child-node 1 :another-child ...)
+(ls)
+(current) - return the current object
+(current :sub1 :sub2 ...) - return the object referenced by :sub1 and :sub2 from (current)
+
+A pipe operator that can map, mapcat, and reduce a collection in Unix-style.
+
+Duck-typed Grep for deeply recursively nested data structures.
+
+* The matcher can be any type.  If it is a regular expression Pattern, it is matched against
+strings or the output of (.toString obj) Strings match any substring of the target object.
+All other objects match using (= matcher obj).
 
 ## Usage
-
-eclipse-keybindings.epf makes Mac keypad keys work the way most PC users expect in Eclipse.
-Import via File | Import | General | Preferences in Eclipse.
-
-EnvPane-0.3 is a backup of the Mac system environment pane available at:
-http://diaryproducts.net/EnvPane in case the original disappears from the Internet.
-If the page exists, you should certainly use the version there.  It must be installed
-on a per-user basis, not system-wide.
 
 src/bradsdeals/nav.clj - Adds Unix-like navigation and browsing for nested Clojure
 data structures.  See the file itself for more information.

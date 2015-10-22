@@ -126,6 +126,14 @@ intermediate collections, in the order in which fns are specified."
 
 
 (defn grep
+  "Recursively grep the contents of node for elements matching pattern.  Pattern can be
+any type.  If it is a regular expression, it is matched against (.toString obj).  String
+patterns match any substring of (.toString obj).  All other types must match literally.
+If node is omitted, returns an arity-1 function with pattern bound to the specified value,
+and the remaining parameter being the start node.
+
+Returns a vector of the containers of the matched values.  If multiple values in a
+container match, the same container will be returned multiple time."
   ([pattern node]
     (:state
       (v/tree-visitor (v/tree-zipper node) [] [(partial grep-tree-visitor pattern)])))
