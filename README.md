@@ -4,15 +4,15 @@ Clojure-navigation contains utilities for navigating data and/or code.  For exam
 
 * Mount a data structure and navigate it with filesystem-like commands.
 
-(mount data-structure)
-(cd :child-node 1 :another-child ...)
-(ls)
-(current) - return the current object
-(current :sub1 :sub2 ...) - return the object referenced by :sub1 and :sub2 from (current)
+    (mount data-structure)
+    (cd :child-node 1 :another-child ...)
+    (ls)
+    (current) - return the current object
+    (current :sub1 :sub2 ...) - return the object referenced by :sub1 and :sub2 from (current)
 
 * A pipe operator that can map, mapcat, and reduce a collection in Unix-style.
 
-(| (range 50) inc #(/ % 2) +)
+    (| (range 50) inc #(/ % 2) +)
 
 * Duck-typed Grep for deeply recursively nested data structures.
 
@@ -25,14 +25,14 @@ macro form (experimental).
 
 For example:
 
-(inject logging (form1) (form2) ...)
+    (inject logging (form1) (form2) ...)
 
 Logs each form as it is executed.  If a form takes longer than 1/2 second, logs the elapsed
 time as well.
 
 Or:
 
-(fns (form1) (form2) ...)
+    (fns (form1) (form2) ...)
 
 Returns a vector containing all forms converted into 0-arg functions.  These functions then
 can be executed during a map, mapcat, or reduce operation and their results stored, further
