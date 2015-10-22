@@ -128,7 +128,7 @@ intermediate collections, in the order in which fns are specified."
 (defn grep
   ([pattern node]
     (:state
-      (v/tree-visitor (v/tree-zipper node) #{} [(partial grep-tree-visitor pattern)])))
+      (v/tree-visitor (v/tree-zipper node) [] [(partial grep-tree-visitor pattern)])))
   ([pattern]
     (partial grep pattern)))
 
