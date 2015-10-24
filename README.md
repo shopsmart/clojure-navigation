@@ -26,7 +26,7 @@ Generally:
     (grep matcher root-object)
 ```
 The matcher can be any type.  If it is a regular expression Pattern, it is matched against
-strings or the output of (.toString obj) Strings match any substring of the target object.
+strings or the output of (.toString obj) Strings match any substring of (.toString object).
 All other objects match using (= matcher obj).
 
 Example:
