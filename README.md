@@ -25,7 +25,10 @@ Generally:
 ```
     (grep matcher root-object)
 ```
-The matcher can be any type.  If it is a regular expression Pattern, it is matched against
+Recursively applies matcher to *all* children of root-object.  When a match is found, the container
+of the matched object is returned.
+
+The matcher itself can be any type.  If it is a regular expression Pattern, it is matched against
 strings or the output of (.toString obj) Strings match any substring of (.toString object).
 All other objects match using (= matcher obj).
 
@@ -35,6 +38,9 @@ Example:
     => (grep :diffed (current))
     [[:diffed {}] [:diffed {}]]
 ```
+In this case, grep searched a data structure that reports differences between two related objects.
+This run determined that there were no differences found under (current).
+
 
 * A pipe operator that can map, mapcat, and reduce a collection in Unix-style.
 
