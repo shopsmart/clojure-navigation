@@ -3,7 +3,7 @@
 Clojure-navigation contains utilities for navigating data and/or code.  For example:
 
 * Mount a data structure and navigate it with filesystem-like commands.  Each appropriate command
-lists the first 20 rows of the current data structure.  Data structure listings are automatically
+pretty-prints the first 20 rows of the current data structure.  Data structure listings are automatically
 paged so you're less likely to blow up your REPL by inadvertently listing a huge data structure.
 At the same time, the current object pointed-to by the (pwd) is always available so you can
 map, mapcat, reduce, and grep the actual objects to your heart's content.
