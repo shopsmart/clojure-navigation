@@ -20,15 +20,14 @@ map, mapcat, reduce, and grep the actual objects to your heart's content.
 
 * Duck-typed Grep for deeply recursively nested data structures.
 
-The matcher can be any type.  If it is a regular expression Pattern, it is matched against
-strings or the output of (.toString obj) Strings match any substring of the target object.
-All other objects match using (= matcher obj).
-
 Generally:
 
 ```
     (grep matcher root-object)
 ```
+The matcher can be any type.  If it is a regular expression Pattern, it is matched against
+strings or the output of (.toString obj) Strings match any substring of the target object.
+All other objects match using (= matcher obj).
 
 Example:
 
