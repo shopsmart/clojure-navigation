@@ -8,6 +8,7 @@ Clojure-navigation contains utilities for navigating data and/or code.  For exam
     (mount data-structure)
     (cd :child-node 1 :another-child ...)
     (ls)
+    (pwd)
     (current) ; return the current object
     (current :sub1 :sub2 ...) ; return the object referenced by :sub1 and :sub2 from (current)
 ```
