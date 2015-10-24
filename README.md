@@ -11,6 +11,7 @@ map, mapcat, reduce, and grep the actual objects to your heart's content.
 ```clojure
     (mount data-structure)
     (cd :child-node 1 :another-child ...)
+    (cd "..")
     (ls)
     (pwd)
     (current) ; return the current object
