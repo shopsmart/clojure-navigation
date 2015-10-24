@@ -24,6 +24,14 @@ The matcher can be any type.  If it is a regular expression Pattern, it is match
 strings or the output of (.toString obj) Strings match any substring of the target object.
 All other objects match using (= matcher obj).
 
+Generally:
+
+```
+    (grep matcher root-object)
+```
+
+Example:
+
 ```
     => (grep :diffed (current))
     [[:diffed {}] [:diffed {}]]
