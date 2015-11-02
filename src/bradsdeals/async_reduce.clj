@@ -38,17 +38,23 @@ in milliseconds"
   (.shutdown actor-system))
 
 
-(defn- reduce-step-actor [reducer-fn actor-system]
+(defn- reduce-step-actor [reducer-fn step-timeout actor-system]
   (spawn (actor (onReceive [[cur-result nextval]]
-                            (! {:message :step-result :value (reducer-fn cur-result nextval)})))
+                           (let [result-future (future (reducer-fn cur-result nextval))
+                                 result (deref result-future step-timeout :timeout)]
+                             (if (= result :timeout)
+                               (do (future-cancel result-future)
+                                 (! {:message :timeout}))
+                               (! {:message :step-result :value result})))))
          :in actor-system))
 
 
 (defn- reducer-factory
-  [reducer-fn start-value collection]
+  [reducer-fn start-value step-timeout collection]
     (let [actors (start-system)
-          reduce-step (reduce-step-actor reducer-fn actors)
+          reduce-step (reduce-step-actor reducer-fn step-timeout actors)
           state (atom ::none)
+          current (atom ::none)
           coll (atom collection)
           result (promise)]
       (fn []
@@ -58,15 +64,20 @@ in milliseconds"
                    (onReceive [{m :message v :value}]
                               (case m
                                 :start (if-not (empty? @coll)
-                                         (if (= ::none start-value)
-                                           (let [start-value (first @coll)
-                                                 next-value (second @coll)]
-                                             (swap! coll rest)
-                                             (swap! coll rest)
-                                             (! reduce-step [start-value next-value]))
-                                           (let [next-value (first @coll)]
-                                             (swap! coll rest)
-                                             (! reduce-step [start-value next-value]))))
+                                         (do
+                                           (if (= ::none start-value)
+                                             (let [start-value (first @coll)
+                                                   next-value (second @coll)]
+                                               (swap! state (fn [_] start-value))
+                                               (swap! current (fn [_] next-value))
+                                               (swap! coll rest)
+                                               (swap! coll rest))
+                                             (let [next-value (first @coll)]
+                                               (swap! state (fn [_] start-value))
+                                               (swap! current (fn [_] next-value))
+                                               (swap! coll rest)))
+                                           (! reduce-step [@state @current])))
+                                :timeout (! reduce-step [@state @current])    ;; For now, just retry
                                 :step-result (do
                                                (swap! state (fn [_] v))
                                                (if-not (empty? @coll)
@@ -92,6 +103,10 @@ to run in the background, and access to intermediate results are desired.
 With the exception of not supporting reduced? for returning partial results,
 stepwise-reduce follows the Clojure contract for the reduce function.
 
+stepwise-reduce requires an additional parameter, called step-timeout, which
+is the maximum time in milliseconds that a step may take before it is cancelled
+and retried.
+
 stepwise-reduce returns a reduction, which is to treated as an opaque type.
 Ask a reduction for the current computation status using the status function.
 The realized? function treats the reduction like a promise and returns if
@@ -100,10 +115,10 @@ returns the final result if it is realized, or the current status of the
 reduction if it is not.  The result function returns a Clojure Promise, that
 can be dereferenced in the usual way to block until the final result is
 realized."
-  ([reducer-fn collection]
-    (stepwise-reduce reducer-fn ::none collection))
-  ([reducer-fn start-value collection]
-    (let [start-reduce-fn (reducer-factory reducer-fn start-value collection)]
+  ([reducer-fn step-timeout collection]
+    (reduce reducer-fn ::none step-timeout collection))
+  ([reducer-fn start-value step-timeout collection]
+    (let [start-reduce-fn (reducer-factory reducer-fn start-value step-timeout collection)]
       (start-reduce-fn))))
 
 
