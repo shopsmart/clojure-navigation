@@ -6,6 +6,7 @@ Also includes xreduce, a version of reduce that returns a transducer function."
   (:require [clojure.zip :as zip]
             [clojure.core.reducers :as r]
             [bradsdeals.tree-visit :as v])
+  (:import [java.util Map Map$Entry])
   (:gen-class))
 
 
@@ -106,26 +107,55 @@ intermediate collections, in the order in which fns are specified."
    (sequence composed-fns input)))
 
 
-(defn- parent-container [loc]
+(defn supported-coll? [node]
+  (or (map? node) (vector? node) (list? node) (set? node) (seq? node)))
+
+(defn parent-container [loc]
   (let [up (zip/up loc)
         parent (if up (zip/node up))]
     (cond
       (nil? parent) (zip/node loc)
-      (or (map? parent) (vector? parent) (list? parent) (set? parent) (seq? parent)) parent
+      (supported-coll? parent) parent
       :else (parent-container (zip/up loc)))))
 
+(defn depth [loc]
+  (if (nil? (zip/up loc))
+    0
+    (+ (if (instance? Map$Entry (zip/node loc))
+         0
+         1)
+       (depth (zip/up loc)))))
 
-(defn- grep-tree-visitor
-  [pattern node state loc]
-  (if-not (or (map? node) (vector? node) (list? node) (set? node) (seq? node) (nil? node))
-    (if (instance? java.util.regex.Pattern pattern)
-      (if (re-matches pattern (.toString node))
-        {:state (conj state (parent-container loc))})
-      (if (string? pattern)
-        (if (.contains (.toString node) pattern)
-          {:state (conj state (parent-container loc))})
-        (if (= pattern node)
-          {:state (conj state (parent-container loc))})))))
+(defn- index [loc]
+  (count (zip/lefts loc)))
+
+(defn update-breadcrumb [old-path loc]
+  (let [parent (parent-container loc)
+        new-depth (depth loc)
+        new-index (index loc)
+        new-node (zip/node loc)]
+    (if (or (instance? Map$Entry new-node) (nil? (zip/up loc)))
+      old-path
+      (if (instance? Map$Entry parent)
+        (if (not (supported-coll? new-node))
+          (conj (vec (take (- new-depth 1) old-path)) new-node)
+          old-path)
+        (conj (vec (take (- new-depth 1) old-path)) new-index)))))
+
+
+(defn- grep-tree-visitor [pattern]
+  (let [breadcrumb (atom [])]
+    (fn [node state loc]
+      (swap! breadcrumb update-breadcrumb loc)
+      (if-not (or (supported-coll? node) (nil? node))
+        (if (instance? java.util.regex.Pattern pattern)
+          (if (re-matches pattern (.toString node))
+            {:state (conj state [@breadcrumb (parent-container loc)])})
+          (if (string? pattern)
+            (if (.contains (.toString node) pattern)
+              {:state (conj state [@breadcrumb (parent-container loc)])})
+            (if (= pattern node)
+              {:state (conj state [@breadcrumb (parent-container loc)])})))))))
 
 
 (defn grep
@@ -139,7 +169,7 @@ Returns a vector of the containers of the matched values.  If multiple values in
 container match, the same container will be returned multiple time."
   ([pattern node]
     (:state
-      (v/tree-visitor (v/tree-zipper node) [] [(partial grep-tree-visitor pattern)])))
+      (v/tree-visitor (v/tree-zipper node) [] [(grep-tree-visitor pattern)])))
   ([pattern]
     (partial grep pattern)))
 
