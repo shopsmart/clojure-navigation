@@ -120,9 +120,12 @@ page, 'ls 3' the third, and so on."
 
 (defmacro mount
   "Mount an object so that it can be interacted with using Unix-style commands like 'ls', 'cd', etc.
-'root' is the root object to mount."
-  [root]
-    `(named-mount ~root (keyword (str (quote ~root)))))
+  If 'root' is present, it is the root object to mount, otherwise, lists all the vars in the current
+  namespace."
+  [& root]
+  (if (> 0 (count root))
+    `(named-mount ~root (keyword (str (quote ~@root))))
+    `(ns-interns *ns*)))
 
 
 (defn named-mount
@@ -161,5 +164,3 @@ Multiple parameters may be supplied in order to change the current location by m
           (sequential? current) (do (named-mount (:root cursor) {pwd-key (conj pwd nextkey)} (nth current nextkey)) (ls))))
       (if (> (count (rest where)) 0)
         (recur (rest where))))))
-
-
