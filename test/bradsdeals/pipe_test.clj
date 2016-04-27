@@ -115,5 +115,3 @@ Also includes xreduce, a version of reduce that returns a transducer function."
                      next next next next
                      next)]
     (is (= [:a :c :cc :aaa 0] result))))
-
-(run-tests)

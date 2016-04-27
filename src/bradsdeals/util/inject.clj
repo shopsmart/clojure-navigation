@@ -12,7 +12,7 @@ See: inject, inject->>, fns"
             [clojure.string :as s])
   (:gen-class))
 
-;; Define the state of the current computationxs
+;; Define the state of the current computation
 (defrecord State [])
 
 (defn- pprint-str [src]
@@ -20,7 +20,7 @@ See: inject, inject->>, fns"
 
 
 (defn arity
- "Returns the maximum parameter count of each invoke method found by refletion
+ "Returns the maximum parameter count of each invoke method found by reflection
   on the input instance. The returned value can be then interpreted as the arity
   of the input function. The count does NOT detect variadic functions."
   [f]
@@ -196,7 +196,7 @@ way."
 ;;;; Predefined behaviors for use with the inject macros
 
 (defn logging
-  "Log each form as it is executed at debug log level.  If execution time is 
+  "Log each form as it is executed at debug log level.  If execution time is
 greater than 1/2 second, log the execution time as well.
 
 Usage: (inject logging (form1) (form2) ...)"
@@ -260,4 +260,3 @@ Usage: (inject trace-return (form1) (form2) ...)"
         result (f f-input)
         trace (assoc (err/replace-nil (second val) {}) src-fn-name result)]
     [result trace]))
-

@@ -1,4 +1,4 @@
-# clojure-navigation
+# clojure-navigation #
 
 Clojure-navigation contains utilities for navigating data and/or code.  For example:
 
@@ -102,4 +102,3 @@ Copyright © 2015 by ShopSmart, LLC.  Licensed under the Eclipse Public License 
 ## Authors
 
 David Orme
-
