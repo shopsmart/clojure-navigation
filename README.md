@@ -1,6 +1,7 @@
 # clojure-navigation #
 
-Clojure-navigation contains utilities for navigating data and/or code.  For example:
+Clojure-navigation contains utilities for navigating data and injecting behavior around
+lines of code in a block.  For example:
 
 ## Mount a data structure and navigate it with filesystem-like commands.
 
