@@ -1,10 +1,4 @@
-# clojure-navigation #
-
-Clojure-navigation contains utilities for navigating data and injecting behavior around
-lines of code in a block.  The primary intent is to make it easy to inspect and transform
-large data structures from the REPL.
-
-## Mount a data structure and navigate it with filesystem-like commands.
+# Mount a data structure and navigate it with filesystem-like commands.
 
 * Each appropriate command pretty-prints the first 20 rows of the current data structure.
 * Data structure listings are automatically paged so you're less likely to blow up your REPL
