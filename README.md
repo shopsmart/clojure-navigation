@@ -79,8 +79,10 @@ processed, logged, etc.
 ```clojure
 :repositories [["jitpack" "https://jitpack.io"]]
 
-:dependencies [[com.github.shopsmart/clojure-navigation "[![Release](http://jitpack.io/v/com.github.shopsmart/clojure-navigation.svg)](https://jitpack.io/#shopsmart/clojure-navigation)"]]
+:dependencies [[com.github.shopsmart/clojure-navigation "version"]]
 ```
+
+where "version" currently is "[![Release](http://jitpack.io/v/com.github.shopsmart/clojure-navigation.svg)](https://jitpack.io/#shopsmart/clojure-navigation)".
 
 ### Maven coordinates
 
