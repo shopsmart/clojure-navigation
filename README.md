@@ -1,7 +1,8 @@
 # clojure-navigation #
 
 Clojure-navigation contains utilities for navigating data and injecting behavior around
-lines of code in a block.  For example:
+lines of code in a block.  The primary intent is to make it easy to inspect and transform
+large data structures from the REPL.
 
 ## Mount a data structure and navigate it with filesystem-like commands.
 
@@ -74,6 +75,11 @@ Or:
 Returns a vector containing all forms converted into 0-arg functions.  These functions then
 can be executed during a map, mapcat, or reduce operation and their results stored, further
 processed, logged, etc.
+
+### Usage
+
+These utilities are designed mainly to enhance REPL usage, so we suggest adding them to your
+.lein/profiles.clj or equivalent.
 
 ### Leiningen coordinates
 
