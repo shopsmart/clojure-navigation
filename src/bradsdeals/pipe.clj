@@ -96,13 +96,13 @@ collection elements specify the initial two elements in the reduction.  The redu
 supports the 'reduced' function in the standard library so that a single input
 collection can produce multiple reduced outputs.
 
-* A map containing an arity 2 function and a second value treats the function as
+* A vector containing an arity 2 function and a second value treats the function as
 a reducer and the second value as the initial value in the reduction.
 
 The input is processed through fns, a single element at a time, without creating
 intermediate collections, in the order in which fns are specified."
  [input & fns]
- (let [input (if (or (map? input) (sequential? input)) input [input])
+ (let [input (if (or (vector? input) (sequential? input)) input [input])
        composed-fns (fns->transducer fns)]
    (sequence composed-fns input)))
 
@@ -172,5 +172,3 @@ container match, the same container will be returned multiple time."
       (v/tree-visitor (v/tree-zipper node) [] [(grep-tree-visitor pattern)])))
   ([pattern]
     (partial grep pattern)))
-
-
