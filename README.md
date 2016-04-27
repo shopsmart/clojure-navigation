@@ -2,10 +2,12 @@
 
 Clojure-navigation contains utilities for navigating data and/or code.  For example:
 
-* Mount a data structure and navigate it with filesystem-like commands.  Each appropriate command
-pretty-prints the first 20 rows of the current data structure.  Data structure listings are automatically
-paged so you're less likely to blow up your REPL by inadvertently listing a huge data structure.
-At the same time, the current object pointed-to by the (pwd) is always available so you can
+## Mount a data structure and navigate it with filesystem-like commands.
+
+* Each appropriate command pretty-prints the first 20 rows of the current data structure.
+* Data structure listings are automatically paged so you're less likely to blow up your REPL
+by inadvertently listing a huge data structure.
+* At the same time, the current object pointed-to by the (pwd) is always available so you can
 map, mapcat, reduce, and grep the actual objects to your heart's content.
 
 ```clojure
@@ -18,7 +20,7 @@ map, mapcat, reduce, and grep the actual objects to your heart's content.
     (current :sub1 :sub2 ...) ; return the object referenced by :sub1 and :sub2 from (current)
 ```
 
-* Duck-typed Grep for deeply recursively nested data structures.
+## Duck-typed Grep for deeply recursively nested data structures.
 
 Generally:
 
@@ -42,13 +44,15 @@ In this case, grep searched a data structure that reports differences between tw
 This run determined that there were no differences found under (current).
 
 
-* A pipe operator that can map, mapcat, and reduce a collection in Unix-style.
+## A pipe operator that can map, mapcat, and reduce a collection in Unix-style.
 
 ```clojure
     (| (range 50) inc #(/ % 2) +)
 ```
 
-* Inject behavior before/after/around all forms in a do-style block or thread-last
+## Behavior injection
+
+Inject behavior before/after/around all forms in a do-style block or thread-last
 macro form (experimental).
 
 For example:
@@ -70,30 +74,30 @@ Returns a vector containing all forms converted into 0-arg functions.  These fun
 can be executed during a map, mapcat, or reduce operation and their results stored, further
 processed, logged, etc.
 
-## Usage
+### Leiningen coordinates
 
-Open project.clj and change the line that reads:
+```clojure
+:repositories [["jitpack" "https://jitpack.io"]]
 
-```
-    :repositories [["snapshots" {:url "file:/Users/dorme/.m2/repository/"
-```
-
-to point to your local Maven repository
-
-Build using
-
-```
-    lein jar
-    lein deploy snapshots
+:dependencies [[com.github.shopsmart/clojure-navigation "[![Release](http://jitpack.io/v/com.github.shopsmart/clojure-navigation.svg)](https://jitpack.io/#shopsmart/clojure-navigation)"]]
 ```
 
-Then depend on it in Leiningen using:
+### Maven coordinates
 
-```
-    [com.bradsdeals/clojure-navigation "1.0.0-SNAPSHOT"]
+```xml
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+	<name>Jitpack repo</name>
+	<url>https://jitpack.io</url>
+  </repository>
+</repositories>
 ```
 
-TODO: Add clojars information once we have an official build.
+* GroupId: com.github.shopsmart
+* ArtifactId: clojure-navigation
+* Version: [![Release](http://jitpack.io/v/com.github.shopsmart/clojure-navigation.svg)](https://jitpack.io/#shopsmart/clojure-navigation)
+
 
 ## License
 
