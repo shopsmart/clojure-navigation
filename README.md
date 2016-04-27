@@ -79,14 +79,18 @@ processed, logged, etc.
 ### Usage
 
 These utilities are designed mainly to enhance REPL usage, so we suggest adding them to your
-.lein/profiles.clj or equivalent.
+.lein/profiles.clj in the :user or :dev profile or equivalent for your build tool.
 
 ### Leiningen coordinates
 
-```clojure
-:repositories [["jitpack" "https://jitpack.io"]]
+One might always want these utilities available, even at runtime.  In that case, adding
+them to your :user profile would make sense.  To do that, merge the following into your
+:user map in your profiles.clj file.
 
-:dependencies [[com.github.shopsmart/clojure-navigation "version"]]
+```clojure
+:user {:repositories [["jitpack" "https://jitpack.io"]]
+
+       :dependencies [[com.github.shopsmart/clojure-navigation "version"]]}
 ```
 
 where "version" currently is "[![Release](http://jitpack.io/v/com.github.shopsmart/clojure-navigation.svg)](https://jitpack.io/#shopsmart/clojure-navigation)".
