@@ -48,6 +48,8 @@ This run determined that there were no differences found under (current).
 
 ## Behavior injection
 
+(Experimental module)
+
 Inject behavior before/after/around all forms in a do-style block or thread-last
 macro form (experimental).
 
