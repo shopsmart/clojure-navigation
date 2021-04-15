@@ -1,8 +1,6 @@
 repository:
   name: clojure-navigation
   description: "**DEPRECATED** Tools to aid navigating deeply nested Clojure data structures from code or the REPL."
-    Tools to aid navigating deeply nested Clojure data structures from code or
-    the REPL.
   homepage: null
   topics: deprecated,obselete,archived
   private: false
