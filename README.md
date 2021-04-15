@@ -1,4 +1,4 @@
-# Mount a data structure and navigate it with filesystem-like commands.
+# **DEPRECATED** Mount a data structure and navigate it with filesystem-like commands.
 
 * Each appropriate command pretty-prints the first 20 rows of the current data structure.
 * Data structure listings are automatically paged so you're less likely to blow up your REPL
